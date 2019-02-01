@@ -1,0 +1,63 @@
+{% extends 'dashboard/template.html' %}
+{% block main_content %}
+{% load static %}
+<div class="login-page">
+    <div class="container d-flex align-items-center">
+    <div class="form-holder has-shadow">
+        <div class="row">
+        <!-- Logo & Information Panel-->
+        <div class="col-lg-6">
+            <div class="info d-flex align-items-center">
+            <div class="content">
+                <div class="logo">
+                <img src="{% static 'dashboard/img/credaiHomes.png' %}"class="img-fluid"/>
+                </div>
+            </div>
+            </div>
+        </div>
+        <!-- Form Panel    -->
+        <div class="col-lg-6 bg-white">
+            <div class="form d-flex align-items-center">
+            <div class="content">
+
+                <form method="post" action="auth" class="form-validate">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input id="login-username" type="text" name="username" value="{{ current_name }}" required data-msg="Please enter your username" class="input-material">
+                    <label for="login-username" class="label-material">User Name</label>
+                </div>
+                <div class="form-group">
+                    <input id="login-password" type="password" name="password" required data-msg="Please enter your password" class="input-material">
+                    <label for="login-password" class="label-material">Password</label>
+                </div><button type="submit" class="btn btn-primary">Login</button>
+                <!-- This should be submit button but I replaced it with <a> for demo purposes-->
+                </form><a href="/dashboard/forgot" class="forgot-pass">Forgot Password?</a><br><small>Do not have an account? </small><a href="/dashboard/signup" class="signup">Signup</a>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    <div class="copyrights text-center">
+    <p>Design and Developed by <a href="http://binarybizz.com/" class="external">The Binary Bizz</a></p>
+    </div>
+</div>
+<script>
+var errorMessage = "{{ errorMessage }}";
+{% if errorMessage %}
+document.onReady = function () {
+    Messenger.options = {
+        extraClasses: 'messenger-fixed messenger-on-top  messenger-on-right',
+        theme: 'flat',
+        messageDefaults: {
+            showCloseButton: true
+        }
+    }
+    Messenger().post({
+        message: errorMessage,
+        type: 'warning'
+    });
+}
+{% endif %}
+</script>
+{% endblock %}
